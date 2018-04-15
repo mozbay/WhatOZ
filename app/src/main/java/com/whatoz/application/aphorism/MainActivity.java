@@ -1,6 +1,7 @@
 package com.whatoz.application.aphorism;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -39,11 +40,14 @@ public class MainActivity extends Activity {
         login = (Button) findViewById(R.id.login_button);
         newUser = (TextView) findViewById(R.id.new_user);
 
+        final Intent newUserIntent = new Intent(MainActivity.this, NewUserActivity.class);
+
         newUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // TODO: yeni kayıt sayfasına yönlendir
                 Log.e(TAG,"yeni kullanıcı ekleye tıklandı");
+                MainActivity.this.startActivity(newUserIntent);
             }
         });
 
