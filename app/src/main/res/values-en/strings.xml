@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Aphorism</string>
+    <string name="user_name">User Name</string>
+    <string name="password">Password</string>
+    <string name="remember_me">Remember Me</string>
+    <string name="forget_password">Forget Password</string>
+    <string name="login">Login</string>
+    <string name="new_user">ALLAHU AKABAR</string>
+</resources>
