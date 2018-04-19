@@ -6,7 +6,8 @@
     <string name="remember_me">Beni Hatırla</string>
     <string name="forget_password">Şifremi Unuttum</string>
     <string name="login">Giriş</string>
-    <string name="new_login">Yeni Kayıt</string>
+    <string name="login_new">Yeni Kayıt</string>
     <string name="email">e-posta</string>
     <string name="new_user">Apphorisma için daha halaen kayıt oluşturömadın mı yoksa daha neyi nbekliyorsunki???</string>
+    <string name="send_password">Şifre Gönder</string>
 </resources>

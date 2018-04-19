@@ -1,14 +1,14 @@
 package com.whatoz.application.aphorism;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class NewUserActivity extends Activity {
+public class NewUserActivity extends AppCompatActivity {
 
     EditText email;
     EditText userName;
@@ -25,33 +25,23 @@ public class NewUserActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_user_layout);
 
-        final EditText password = (EditText) findViewById(R.id.password_new);
-        final EditText passwordAgain = (EditText) findViewById(R.id.password_again);
-        Button newLogin = (Button) findViewById(R.id. login_new);
-
+        password = (EditText) findViewById(R.id.password_new);
+        passwordAgain = (EditText) findViewById(R.id.password_again);
+        newLogin = (Button) findViewById(R.id.login_new);
+        email = (EditText) findViewById(R.id.email);
+        userName = (EditText) findViewById(R.id.user_name_new);
 
 
         newLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               Log.e(TAG,password.getText().toString());
-                Log.e(TAG,passwordAgain.getText().toString());
+                Log.e(TAG, password.getText().toString());
+                Log.e(TAG, passwordAgain.getText().toString());
                 passwordString = password.getText().toString();
                 newPasswordString = passwordAgain.getText().toString();
 
-               checkPassword(passwordString);
+                Utils.checkTheseEqual(passwordString, newPasswordString);
             }
         });
-    }
-
-    public boolean checkPassword (String pas) {
-
-        if(pas.equals(newPasswordString)) {
-            Log.e(TAG,"true");
-            return true;
-        } {
-            Log.e(TAG,"false");
-            return false;
-        }
     }
 }
