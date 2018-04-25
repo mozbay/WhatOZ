@@ -28,7 +28,7 @@ public class Utils {
         }
     }
 
-    public boolean isConnected3g(Context context) {
+    public static boolean isConnected3g(Context context) {
         try {
             ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo networkInfo = null;
@@ -42,7 +42,7 @@ public class Utils {
         }
     }
 
-    public boolean isConnectingWIFI(Context context) {
+    public static boolean isConnectingWIFI(Context context) {
         try {
             ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo networkInfo = null;
@@ -57,7 +57,7 @@ public class Utils {
         }
     }
 
-    public void alertMessage(Context context, String message) {
+    public static void alertMessage(Context context, String message) {
         try {
             AlertDialog.Builder alert = new AlertDialog.Builder(context);
             alert.setTitle(context.getResources().getString(R.string.app_name));
@@ -76,7 +76,7 @@ public class Utils {
         }
     }
 
-    public void callServiceExecuter(Context context, boolean isAlertMessage, String methodName, Object[] methodsParam, String postMethodName, Object viewScreen, String dialogFlag) {
+    public static void callServiceExecuter(Context context, boolean isAlertMessage, String methodName, Object[] methodsParam, String postMethodName, Object viewScreen, String dialogFlag) {
 
         if (isConnected3g(context) || isConnectingWIFI(context)) {
             JSONObject jsonObject = new JSONObject();

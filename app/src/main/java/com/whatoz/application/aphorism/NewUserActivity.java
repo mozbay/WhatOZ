@@ -8,6 +8,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.whatoz.application.aphorism.Applicaiton.App;
+import com.whatoz.application.aphorism.HttpProcess.ServiceExecuter;
+
+import java.util.ArrayList;
+
 public class NewUserActivity extends AppCompatActivity {
 
     EditText email;
@@ -40,8 +45,19 @@ public class NewUserActivity extends AppCompatActivity {
                 passwordString = password.getText().toString();
                 newPasswordString = passwordAgain.getText().toString();
 
+                callDenemeService("http://138.197.187.231:4040/api/users");
+
                 Utils.checkTheseEqual(passwordString, newPasswordString);
             }
         });
+    }
+
+    public void callDenemeService(String url) {
+
+        Utils.callServiceExecuter(App.getContext(), true, "getDeneme", new Object[]{url}, "getResponceDeneme", NewUserActivity.this, "false");
+    }
+
+    public void getDenemeResponse(ArrayList<String> result) {
+        Log.e(TAG, result + "");
     }
 }
