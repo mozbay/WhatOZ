@@ -11,6 +11,15 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.whatoz.application.aphorism.Applicaiton.App;
+import com.whatoz.application.aphorism.HttpProcess.ServiceConstant;
+import com.whatoz.application.aphorism.Model.User;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+
 /**
  * Created by muratozbay on 13.04.2018.
  */
@@ -31,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_layout);
+
+        final String url = ServiceConstant.SERVER_URL;
 
 
         password = (EditText) findViewById(R.id.password);
@@ -56,6 +67,17 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // TODO: kullanıcıyı kontrol edip aforizmanın olacağı sayfaya yönlendir
                 Log.e(TAG, "logine tıklandı");
+
+                JSONObject jsonObject = new JSONObject();
+                try {
+                    jsonObject.put("uName","kayit");
+                    jsonObject.put("pass","$2b$10$42WdhVZdbTHNcWsq5c0lRumJtTJBbWTyCuvfrKr4djryZE6UjdmyG");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                callLoginService(url + "users/findUser" ,jsonObject);
+
             }
         });
 
@@ -79,5 +101,14 @@ public class MainActivity extends AppCompatActivity {
                 MainActivity.this.startActivity(forgetPasswordIntent);
             }
         });
+    }
+
+    public void callLoginService(String url,JSONObject jsonObject) {
+
+        Utils.callServiceExecuter(App.getContext(), true, "callPostMethod", new Object[]{url,jsonObject}, "getLoginResponse", MainActivity.this, "false");
+    }
+
+    public void getLoginResponse(User result) {
+        Log.e(TAG, result + "");
     }
 }

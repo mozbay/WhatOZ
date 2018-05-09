@@ -10,4 +10,9 @@
     <string name="email">e-posta</string>
     <string name="new_user">Apphorisma için daha halaen kayıt oluşturömadın mı yoksa daha neyi nbekliyorsunki???</string>
     <string name="send_password">Şifre Gönder</string>
+    <string name="_uid">_id</string>
+    <string name="_username">username</string>
+    <string name="_mobileNumber">mobileNumber</string>
+    <string name="_email">email</string>
+    <string name="_password">password</string>
 </resources>

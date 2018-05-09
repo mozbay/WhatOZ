@@ -2,6 +2,13 @@ package com.whatoz.application.aphorism.HttpProcess;
 
 import android.util.Log;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -80,61 +87,90 @@ public class HttpPostObject {
         }
     }
 
-    public String HttpPost(String url, JSONObject jsonObject) throws JSONException {
-
+    public String httpPost(String url, JSONObject jsonObject) throws JSONException {
+        InputStream inputStream = null;
+        String result = "";
         try {
-            InputStream inInputStream = null;
-            URL stringUrl;
-            try {
-                stringUrl = new URL(url);
-                URLConnection urlConnection = null;
 
-                try {
-                    urlConnection = stringUrl.openConnection();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
 
-                try {
-                    Log.e(TAG, url);
-                    HttpURLConnection httpURLConnection = (HttpURLConnection) urlConnection;
-                    httpURLConnection.setRequestMethod("POST");
-                    httpURLConnection.setConnectTimeout(3000);
+            // 2. make POST request to the given URL
+            HttpPost httpPost = new HttpPost(url);
 
-                    if (httpURLConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                        inInputStream = httpURLConnection.getInputStream();
-                    }
-                } catch (ProtocolException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+            String json = "";
 
+            // 4. convert JSONObject to JSON to String
+            json = jsonObject.toString();
 
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            }
+            // ** Alternative way to convert Person object to JSON string using Jackson Lib
+            // ObjectMapper mapper = new ObjectMapper();
+            // json = mapper.writeValueAsString(person);
 
-            try {
-                BufferedReader reader = new BufferedReader(new InputStreamReader(
-                        inInputStream, "UTF-8"), 8);
-                StringBuilder builder = new StringBuilder();
-                String line = null;
-                while ((line = reader.readLine()) != null) {
-                    builder.append(line + "\n");
-                }
-                inInputStream.close();
-                json = builder.toString();
+            // 5. set json to StringEntity
+            StringEntity se = new StringEntity(json);
 
-            } catch (Exception e) {
-                Log.e("Buffered Error", "Error converting result: " + e.toString());
-            }
+            // 6. set httpPost Entity
+            httpPost.setEntity(se);
 
+            // 7. Set some headers to inform server about the type of the content
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/json");
 
-            return json;
+            // 8. Execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpPost);
+
+            // 9. receive response as inputStream
+            inputStream = httpResponse.getEntity().getContent();
+
+            // 10. convert inputStream to string
+            if (inputStream != null)
+                result = convertInputStreamToString(inputStream);
+            else
+                result = "Did not work!";
+
         } catch (Exception e) {
-            return e.toString();
+            Log.d("InputStream", e.getLocalizedMessage());
         }
+
+        // 11. return result
+        return result;
+    }
+
+    public String httpPut(String url, String content) throws JSONException {
+        try {
+            HttpClient httpClient = new DefaultHttpClient();
+            HttpPut httpPut = new HttpPut(url);
+            try {
+                StringEntity entity = new StringEntity(content, "UTF-8");
+                entity.setContentType("application/json");
+                httpPut.setEntity(entity);
+
+                // Execute HTTP Put Request
+                HttpResponse response = httpClient.execute(httpPut);
+                return String.valueOf(response.getStatusLine().getStatusCode());
+
+            } catch (ClientProtocolException e) {
+                Log.e(TAG, e.getMessage());
+            } catch (IOException e) {
+                Log.e(TAG, e.getMessage());
+            }
+
+        } catch (Exception e) {
+            return e.getMessage();
+        }
+        return null;
+    }
+
+    private String convertInputStreamToString(InputStream inputStream) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+        String line = "";
+        String result = "";
+        while ((line = bufferedReader.readLine()) != null)
+            result += line;
+
+        inputStream.close();
+        return result;
 
     }
 }

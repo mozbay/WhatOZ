@@ -16,12 +16,32 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    android {
+        useLibrary 'org.apache.http.legacy'
+    }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.android.support:appcompat-v7:26.1.0'
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+    compile 'com.jakewharton:butterknife:8.5.1'
+    compile 'com.squareup.retrofit2:retrofit:2.4.0'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    testCompile 'junit:junit:4.12'
+
+    compile 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+
+    compile 'com.google.firebase:firebase-core:11.8.0'
+    compile 'com.google.firebase:firebase-messaging:11.8.0'
+
+    compile 'com.firebase:firebase-jobdispatcher:0.5.2'
+    compile 'br.com.simplepass:loading-button-android:1.11.0'
+    compile 'de.hdodenhof:circleimageview:2.2.0'
+    compile 'com.google.android:flexbox:0.3.2'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.facebook.android:facebook-android-sdk:4.31.0'
+    compile 'com.contrarywind:Android-PickerView:4.1.2'
 }

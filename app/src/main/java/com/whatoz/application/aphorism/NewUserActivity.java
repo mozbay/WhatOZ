@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.whatoz.application.aphorism.Applicaiton.App;
-import com.whatoz.application.aphorism.HttpProcess.ServiceExecuter;
+import com.whatoz.application.aphorism.HttpProcess.ServiceConstant;
 
 import java.util.ArrayList;
 
@@ -23,6 +23,7 @@ public class NewUserActivity extends AppCompatActivity {
     String passwordString = "";
     String newPasswordString = "";
     public static final String TAG = "NewUserActivity";
+    final String url = ServiceConstant.SERVER_URL;
 
 
     @Override
@@ -45,7 +46,7 @@ public class NewUserActivity extends AppCompatActivity {
                 passwordString = password.getText().toString();
                 newPasswordString = passwordAgain.getText().toString();
 
-                callDenemeService("http://138.197.187.231:4040/api/users");
+                callDenemeService(url + "users");
 
                 Utils.checkTheseEqual(passwordString, newPasswordString);
             }
@@ -54,10 +55,12 @@ public class NewUserActivity extends AppCompatActivity {
 
     public void callDenemeService(String url) {
 
-        Utils.callServiceExecuter(App.getContext(), true, "getDeneme", new Object[]{url}, "getResponceDeneme", NewUserActivity.this, "false");
+        Utils.callServiceExecuter(App.getContext(), true, "getDeneme", new Object[]{url}, "getResponseDeneme", NewUserActivity.this, "false");
     }
 
     public void getDenemeResponse(ArrayList<String> result) {
         Log.e(TAG, result + "");
     }
+
+
 }
